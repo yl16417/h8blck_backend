@@ -40,7 +40,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="/Users/liye/Documents/h8blck_backend/venv"
+VIRTUAL_ENV="/Users/liye/Desktop/h8blck_backend/venv"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"

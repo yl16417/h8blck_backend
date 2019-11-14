@@ -1,0 +1,5 @@
+h8blck_backend/__pycache__/
+*.pyc
+.idea/
+*.iml
+venv/

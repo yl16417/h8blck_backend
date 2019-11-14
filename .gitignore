@@ -1,5 +1,9 @@
+<<<<<<< HEAD
 h8blck_backend/__pycache__/
 /**/*.pyc
 .idea/
 *.iml
 venv/
+=======
+.env
+>>>>>>> 2f02f4743a366505c0fc33fb2bc3740ebddaabc3

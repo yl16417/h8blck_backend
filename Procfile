@@ -1,1 +1,1 @@
-web: gunicorn h8blck_backend.wsgi --log-file -
+web: gunicorn app:app

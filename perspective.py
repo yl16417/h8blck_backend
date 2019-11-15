@@ -1,4 +1,5 @@
 from googleapiclient import discovery
+import os
 import json
 
 
@@ -33,7 +34,10 @@ def makePerspectiveRequest(text):
     :return: The text mapped to its toxicity score
     """
     # Generates API client object dynamically based on service name and version.
-    API_KEY = 'AIzaSyDy7zxntOvkuIIqbJ3X2_7NOdNPh1WpWqY'
+    API_KEY = os.environ.get('PERSPECTIVE_API_KEY', None)
+    if not API_KEY:
+        return {"", ""}
+    
     service = discovery.build('commentanalyzer', 'v1alpha1', developerKey=API_KEY)
     
     analyze_request = {

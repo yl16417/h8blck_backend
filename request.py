@@ -1,12 +1,9 @@
-import http.server as s
-import socketserver
-from urllib import parse
-from h8blck_backend import perspective
-
-PORT = 9000
+from flask import request
+from flask_restful import Resource
+import perspective
 
 
-class PerspectiveHandler(s.BaseHTTPRequestHandler):
+class PerspectiveHandler(Resource):
     def _set_headers(self):
         """
         Sets the headers for the request response
@@ -24,18 +21,13 @@ class PerspectiveHandler(s.BaseHTTPRequestHandler):
         content = '<html><body><h1>{responseText}</h1></body></html>'
         return content.encode("utf8")
         
-    def _parseRequestParameters(self):
-        requestParameters = parse.urlsplit(self.path).query
-        return dict(parse.parse_qs(requestParameters))
+    def _parseRequestParameters(self, texts):
+        
+        return []
     
-    def do_GET(self):
+    def get(self, texts):
         self._set_headers()
         self.wfile.write(self._html('Received get request'))
-        textList = self._parseRequestParameters()['texts']
+        textList = self._parseRequestParameters(texts)
         analysedTexts = perspective.processRequest(textList)
         self.wfile.write(self._html(analysedTexts))
-        
-        
-with socketserver.TCPServer(("", PORT), PerspectiveHandler) as httpd:
-    print('Server is up and running :O')
-    httpd.serve_forever()

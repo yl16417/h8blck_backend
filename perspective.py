@@ -47,7 +47,5 @@ def makePerspectiveRequest(text):
     }
     
     response = service.comments().analyze(body=analyze_request).execute()
-    print(json.dumps(response, indent=2))
-    responseData = json.loads(response.text)
-    toxicityScore = responseData['attributeScores']['TOXICITY']['summaryScore']['value']
+    toxicityScore = response['attributeScores']['TOXICITY']['summaryScore']['value']
     return {text: toxicityScore}

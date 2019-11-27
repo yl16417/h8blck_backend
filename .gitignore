@@ -2,4 +2,4 @@ h8blck_backend/__pycache__/
 /**/*.pyc
 .idea/
 *.iml
-my_venv/
+my-venv/

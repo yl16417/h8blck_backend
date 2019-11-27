@@ -1,6 +1,5 @@
 from googleapiclient import discovery
 import os
-import json
 
 
 def processRequest(textList):

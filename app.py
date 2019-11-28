@@ -8,7 +8,7 @@ class PerspectiveHandler(Resource):
         texts = request.form['data']
         textList = texts.split(",")
         analysedTexts = perspective.processRequest(textList)
-        return analysedTexts, 200
+        return {'texts': analysedTexts}
 
 
 app = Flask(__name__)

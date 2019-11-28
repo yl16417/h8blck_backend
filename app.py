@@ -1,11 +1,11 @@
-from flask import Flask
-from flask_restful import Api
-from flask_restful import Resource
+from flask import Flask, request
+from flask_restful import Api, Resource
 import perspective
 
 
 class PerspectiveHandler(Resource):
-    def get(self, texts):
+    def get(self):
+        texts = request.form['data']
         textList = texts.split(",")
         analysedTexts = perspective.processRequest(textList)
         return analysedTexts, 200
@@ -13,7 +13,7 @@ class PerspectiveHandler(Resource):
 
 app = Flask(__name__)
 api = Api(app)
-api.add_resource(PerspectiveHandler, "/analyse/<string:texts>")
+api.add_resource(PerspectiveHandler, *["/analyse/", "/analyse"])
 
 if __name__ == "__main__":
     app.run(debug=True)

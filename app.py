@@ -7,8 +7,7 @@ class PerspectiveHandler(Resource):
     def put(self):
         print(str(request.form))
         texts = request.form['data']
-        textList = json.load(texts)['data']
-        analysedTexts = perspective.processRequest(textList)
+        analysedTexts = perspective.processRequest(texts)
         return {'texts': analysedTexts}
 
 

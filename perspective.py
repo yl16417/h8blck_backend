@@ -1,5 +1,6 @@
 from googleapiclient import discovery
 import os
+import time
 
 
 def processRequest(textList):
@@ -11,6 +12,7 @@ def processRequest(textList):
     analysedTexts = []
     for text in textList:
         analysedTexts.append(makePerspectiveRequest(text))
+        time.sleep(1)
     return analysedTexts
 
 

@@ -9,10 +9,9 @@ def processRequest(textList):
     :param textList: The array of texts to analyse
     :return: A map from analysed texts to their corresponding toxicity scores
     """
-    analysedTexts = []
+    analysedTexts = {}
     for text in textList:
-        print("Text to be analysed: %s" %text)
-        analysedTexts.append(makePerspectiveRequest(text))
+        analysedTexts[text] = makePerspectiveRequest(text)
         time.sleep(1)
     return analysedTexts
 
@@ -36,7 +35,7 @@ def makePerspectiveRequest(text):
     :return: The text mapped to its toxicity score
     """
     # Generates API client object dynamically based on service name and version.
-    API_KEY = os.environ.get('PERSPECTIVE_API_KEY', None)
+    API_KEY = 'AIzaSyDy7zxntOvkuIIqbJ3X2_7NOdNPh1WpWqY' #os.environ.get('PERSPECTIVE_API_KEY', None)
     if not API_KEY:
         return {"", ""}
     
@@ -49,6 +48,4 @@ def makePerspectiveRequest(text):
     }
     
     response = service.comments().analyze(body=analyze_request).execute()
-    print("Analysed text response is %s" %response)
-    toxicityScore = response['attributeScores']['TOXICITY']['summaryScore']['value']
-    return {text: toxicityScore}
+    return response['attributeScores']['TOXICITY']['summaryScore']['value']

@@ -1,12 +1,11 @@
 from flask import Flask, request
 from flask_restful import Api, Resource
 import perspective
-import json
 
 
 class PerspectiveHandler(Resource):
     def put(self):
-        textList = json.load(request.form)['data']
+        textList = request.get_json(force=True)['data']
         analysedTexts = perspective.processRequest(textList)
         return {'texts': analysedTexts}
 

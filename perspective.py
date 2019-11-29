@@ -11,6 +11,7 @@ def processRequest(textList):
     """
     analysedTexts = []
     for text in textList:
+        print("Text to be analysed: %s" %text)
         analysedTexts.append(makePerspectiveRequest(text))
         time.sleep(1)
     return analysedTexts
@@ -48,5 +49,6 @@ def makePerspectiveRequest(text):
     }
     
     response = service.comments().analyze(body=analyze_request).execute()
+    print("Analysed text response is %s" %response)
     toxicityScore = response['attributeScores']['TOXICITY']['summaryScore']['value']
     return {text: toxicityScore}

@@ -3,16 +3,14 @@ import os
 import time
 
 
-def processRequest(textList):
+def processRequest(text):
     """
     Sends list of texts to Perspective API for analysis and returns their toxicity scores
-    :param textList: The array of texts to analyse
+    :param text: The text to analyse
     :return: A map from analysed texts to their corresponding toxicity scores
     """
-    analysedTexts = {}
-    for text in textList:
-        analysedTexts[text] = makePerspectiveRequest(text)
-        time.sleep(1)
+    analysedTexts = {text: makePerspectiveRequest(text)}
+    time.sleep(1)
     return analysedTexts
 
 
@@ -35,7 +33,7 @@ def makePerspectiveRequest(text):
     :return: The text mapped to its toxicity score
     """
     # Generates API client object dynamically based on service name and version.
-    API_KEY = 'AIzaSyDy7zxntOvkuIIqbJ3X2_7NOdNPh1WpWqY' #os.environ.get('PERSPECTIVE_API_KEY', None)
+    API_KEY = os.environ.get('PERSPECTIVE_API_KEY', None)
     if not API_KEY:
         return {"", ""}
     

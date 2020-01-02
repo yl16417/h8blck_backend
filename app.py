@@ -1,12 +1,14 @@
 from flask import Flask, request
 from flask_restful import Api, Resource
+import ast
 import perspective
 
 
 class PerspectiveHandler(Resource):
     def put(self):
-        text = request.form['data']
-        analysedTexts = perspective.processRequest(text)
+        reqForm = request.form['data']
+        data = ast.literal_eval(reqForm)
+        analysedTexts = perspective.processRequest(data)
         print("Analysed text response is %s" % analysedTexts)
         return analysedTexts
 

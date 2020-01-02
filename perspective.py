@@ -1,4 +1,5 @@
 from googleapiclient import discovery
+from googleapiclient.errors import HttpError
 import os
 
 
@@ -42,5 +43,9 @@ def makePerspectiveRequest(text, keyNum):
         'requestedAttributes': {'TOXICITY': {}}
     }
     
-    response = service.comments().analyze(body=analyze_request).execute()
-    return response['attributeScores']['TOXICITY']['summaryScore']['value']
+    try:
+        response = service.comments().analyze(body=analyze_request).execute()
+        return response['attributeScores']['TOXICITY']['summaryScore']['value']
+    except HttpError as err:
+        print("ERROR: " + err)
+        return 0.5

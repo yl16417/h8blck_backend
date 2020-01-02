@@ -9,7 +9,7 @@ class PerspectiveHandler(Resource):
         reqForm = request.form['data']
         data = ast.literal_eval(reqForm)
         analysedTexts = perspective.processRequest(data)
-        print("Analysed text response is %s" % analysedTexts)
+        print("INFO: Analysed text response is %s" % analysedTexts)
         return analysedTexts
 
 

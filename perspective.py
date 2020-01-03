@@ -14,7 +14,7 @@ def processRequest(data):
     prob = profanityCheck(text)
     if prob >= 0.7:
         return {text: prob}
-    
+
     return {text: makePerspectiveRequest(text, key)}
 
 
@@ -24,7 +24,7 @@ def profanityCheck(text):
     :param: text The text to analyse
     :return: The probability of the text containing profanity
     """
-    return predict_prob([text])
+    return predict_prob([text])[0]
 
 
 def makePerspectiveRequest(text, keyNum):
@@ -49,7 +49,7 @@ def makePerspectiveRequest(text, keyNum):
     # Generates API client object dynamically based on service name and version.
     API_KEY = os.environ.get('PERSPECTIVE_API_KEY_' + keyNum, None)
     if not API_KEY:
-        return {"", ""}
+        return -1
     
     service = discovery.build('commentanalyzer', 'v1alpha1', developerKey=API_KEY)
     
@@ -64,4 +64,4 @@ def makePerspectiveRequest(text, keyNum):
         return response['attributeScores']['TOXICITY']['summaryScore']['value']
     except HttpError as err:
         print("ERROR: " + err)
-        return 0.5
+        return -1

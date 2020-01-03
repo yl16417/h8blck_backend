@@ -1,5 +1,6 @@
 from googleapiclient import discovery
 from googleapiclient.errors import HttpError
+from profanity_check import predict_prob
 import os
 
 
@@ -9,7 +10,21 @@ def processRequest(data):
     :param: data The array of texts to analyse
     :return: A map from analysed texts to their corresponding toxicity scores
     """
-    return {data[0]: makePerspectiveRequest(data[0], data[1])}
+    text, key = data[0], data[1]
+    prob = profanityCheck(text)
+    if prob >= 0.7:
+        return {text: prob}
+    
+    return {text: makePerspectiveRequest(text, key)}
+
+
+def profanityCheck(text):
+    """
+    Initial profanity check using profanity_check
+    :param: text The text to analyse
+    :return: The probability of the text containing profanity
+    """
+    return predict_prob([text])
 
 
 def makePerspectiveRequest(text, keyNum):
@@ -27,7 +42,8 @@ def makePerspectiveRequest(text, keyNum):
         "languages": ["en"]
     }
     Extracts the toxicity score
-    :param text: The text to analyse
+    :param: text The text to analyse
+    :param: keyNum The API key to use
     :return: The text mapped to its toxicity score
     """
     # Generates API client object dynamically based on service name and version.

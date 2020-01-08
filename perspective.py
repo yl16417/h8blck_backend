@@ -10,24 +10,27 @@ def processRequest(data):
     :param: data The array of texts to analyse
     :return: A map from analysed texts to their corresponding toxicity scores
     """
-    text, key = data[0], data[1]
+    text, key, lang = data[0], data[1], data[2]
     prob = profanityCheck(text)
     if prob >= 0.7:
         return {text: prob}
 
-    return {text: makePerspectiveRequest(text, key)}
+    print("Analysing text %s, of the language %s" % (text, lang))
+    return {text: makePerspectiveRequest(text, key, lang)}
 
 
 def profanityCheck(text):
     """
     Initial profanity check using profanity_check
     :param: text The text to analyse
+    :param: keyNum The key number to use
+    :param: lang The language of the text
     :return: The probability of the text containing profanity
     """
     return predict_prob([text])[0]
 
 
-def makePerspectiveRequest(text, keyNum):
+def makePerspectiveRequest(text, keyNum, lang):
     """
     Makes a request to Perspective API which returns a response of the form:
     {
@@ -50,12 +53,14 @@ def makePerspectiveRequest(text, keyNum):
     API_KEY = os.environ.get('PERSPECTIVE_API_KEY_' + keyNum, None)
     if not API_KEY:
         return -1
+    if not lang:
+        lang = 'eng'
     
     service = discovery.build('commentanalyzer', 'v1alpha1', developerKey=API_KEY)
     
     analyze_request = {
         'comment': {'text': text},
-        'languages': ['en'],
+        'languages': [lang],
         'requestedAttributes': {'TOXICITY': {}}
     }
     

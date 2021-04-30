@@ -35,7 +35,7 @@ srsly==0.0.7
 thinc==7.0.8
 tqdm==4.32.2
 uritemplate==3.0.0
-urllib3==1.25.3
+urllib3==1.25.8
 virtualenv==16.7.7
 wasabi==0.2.2
 Werkzeug==0.16.0
